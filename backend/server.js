@@ -1,14 +1,18 @@
 const express = require("express");
 const cors = require("cors");
-
-require("dotenv").config();
+const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+
+dotenv.config();
 
 const { readdirSync } = require("fs");
 const app = express();
-app.use(cors());
 
-//routes
+// Middleware
+app.use(cors());
+app.use(express.json()); // Add this line to parse JSON requests
+
+// Routes
 readdirSync("./routes").forEach((file) => {
   const route = require(`./routes/${file}`);
   if (typeof route === "function") {
@@ -18,10 +22,11 @@ readdirSync("./routes").forEach((file) => {
   }
 });
 
-//database
+// Database
 mongoose
   .connect(process.env.URL, {
-    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    dbName: "linkbook",
   })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.log("Error connecting to DB: ", err));
