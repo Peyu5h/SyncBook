@@ -1,13 +1,17 @@
-import { Photo, Feeling } from "./svg";
+import { Route, Routes } from "react-router-dom";
+import Profile from "./pages/Profile";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
 
 const App = () => {
   return (
-    <div>
-      <div className="text-xl">Hellllo</div>
-      <div className="all_friends_icon"></div>
-      <Photo color="blue" />
-      <Feeling />
-    </div>
+    <>
+      <Routes>
+        <Route path="/login" element={<Login />} exact />
+        <Route path="/profile" element={<Profile />} exact />
+        <Route path="/profile" element={<Home />} exact />
+      </Routes>
+    </>
   );
 };
 
