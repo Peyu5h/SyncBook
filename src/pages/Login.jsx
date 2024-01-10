@@ -60,7 +60,7 @@ const Login = () => {
       {/* ========================= SIGN UP ======================================== */}
       {signup && (
         <div className="signup absolute top-0 left-0 w-full h-screen bg-black bg-opacity-60 z-50 flex justify-center items-center">
-          <div className="sigUpForm w-[26rem] h-[82%] bg-white rounded-lg shadow-lg p-4 font-hel">
+          <div className="sigUpForm mx-4 w-[26rem] :h-[82%] bg-white rounded-lg shadow-lg p-4 font-hel">
             <div className="header flex justify-between text-gray-800">
               <div className="text">
                 <h1 className="text-3xl font-semibold">Sign Up</h1>
@@ -94,11 +94,7 @@ const Login = () => {
                         formik.touched.first_name && formik.errors.first_name
                           ? "border-red-500"
                           : ""
-                      } ${
-                        formik.errors.last_name && formik.errors.first_name
-                          ? "mt-5"
-                          : ""
-                      }`}
+                      } ${formik.errors.last_name ? "mt-5" : ""}`}
                       type="text"
                       placeholder="First Name"
                     />
