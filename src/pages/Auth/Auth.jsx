@@ -16,6 +16,11 @@ const Login = () => {
     setPasswordVisible((prev) => !prev);
   };
 
+  const [LogUser, setLogUser] = useState({
+    email: "",
+    password: "",
+  });
+
   //validationTxt
   const formik = useFormik({
     initialValues: {
@@ -55,6 +60,43 @@ const Login = () => {
     setSignup(!signup);
   };
 
+  const userInfos = {
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    bYear: new Date().getFullYear(),
+    bMonth: new Date().getMonth() + 1,
+    bDay: new Date().getDate(),
+    gender: "",
+  };
+  const [user, setUser] = useState(userInfos);
+  const {
+    first_name,
+    last_name,
+    email,
+    newPassword,
+    bYear,
+    bMonth,
+    bDay,
+    gender,
+  } = user;
+
+  //option for DOB
+  const yearTemp = new Date().getFullYear();
+  const years = Array.from(new Array(100), (val, index) => yearTemp - index);
+  const months = Array.from(new Array(12), (val, index) => index + 1);
+
+  const getDays = (bYear, bMonth) => {
+    return new Date(bYear, bMonth, 0).getDate();
+  };
+  const days = Array.from(
+    new Array(getDays(bYear, bMonth)),
+    (val, index) => index + 1
+  );
+
+  console.log(user);
+  console.log(LogUser);
   return (
     <div className=" bg-blue-50">
       {/* ========================= SIGN UP ======================================== */}
@@ -81,12 +123,15 @@ const Login = () => {
                 <div className="FirstName">
                   <div className="first_name relative w-full">
                     {formik.touched.first_name && formik.errors.first_name ? (
-                      <div className="text-red-500 text-sm mb-0  ">
+                      <div className="text-red-500 text-sm mb-0">
                         {formik.errors.first_name}
                       </div>
                     ) : null}
                     <input
-                      onChange={formik.handleChange}
+                      onChange={(e) => {
+                        formik.handleChange(e);
+                        setUser({ ...user, first_name: e.target.value });
+                      }}
                       onBlur={formik.handleBlur}
                       value={formik.values.first_name}
                       name="first_name"
@@ -94,7 +139,11 @@ const Login = () => {
                         formik.touched.first_name && formik.errors.first_name
                           ? "border-red-500"
                           : ""
-                      } ${formik.errors.last_name ? "mt-5" : ""}`}
+                      } ${
+                        formik.touched.last_name && formik.errors.last_name
+                          ? "mt-5"
+                          : ""
+                      }`} // Apply mt-5 if last name has an error
                       type="text"
                       placeholder="First Name"
                     />
@@ -104,25 +153,33 @@ const Login = () => {
                 {/* ======== Last Name ============== */}
                 <div className="last_name relative">
                   {formik.touched.last_name && formik.errors.last_name ? (
-                    <div className="text-red-500 text-sm ">
+                    <div className="text-red-500 text-sm">
                       {formik.errors.last_name}
                     </div>
                   ) : null}
                   <input
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      formik.handleChange(e);
+                      setUser({ ...user, last_name: e.target.value });
+                    }}
                     onBlur={formik.handleBlur}
                     value={formik.values.last_name}
                     name="last_name"
                     className={`w-full outline-none border-gray-200 border-2 rounded-md p-3 mb-2 ${
                       formik.touched.last_name && formik.errors.last_name
-                        ? "border-red-500 mt-0"
+                        ? "border-red-500"
                         : ""
-                    } ${formik.errors.first_name ? "mt-5" : ""}`}
+                    } ${
+                      formik.touched.first_name && formik.errors.first_name
+                        ? "mt-5"
+                        : ""
+                    }`} // Apply mt-5 if first name has an error
                     type="text"
                     placeholder="Surname"
                   />
                 </div>
               </div>
+
               {/* ========== Mobile or email ============================ */}
               <div className="mobileAndEmail relative">
                 {formik.touched.mobileAndEmail &&
@@ -132,7 +189,10 @@ const Login = () => {
                   </div>
                 ) : null}
                 <input
-                  onChange={formik.handleChange}
+                  onChange={(e) => {
+                    formik.handleChange(e);
+                    setUser({ ...user, email: e.target.value });
+                  }}
                   onBlur={formik.handleBlur}
                   value={formik.values.mobileAndEmail}
                   name="mobileAndEmail"
@@ -165,7 +225,10 @@ const Login = () => {
                   </div>
                 ) : null}
                 <input
-                  onChange={formik.handleChange}
+                  onChange={(e) => {
+                    formik.handleChange(e);
+                    setUser({ ...user, newPassword: e.target.value });
+                  }}
                   onBlur={formik.handleBlur}
                   value={formik.values.newPassword}
                   name="newPassword"
@@ -201,24 +264,43 @@ const Login = () => {
                   <select
                     className="border-2 w-[30%] border-gray-200 rounded-md px-3 py-2 outline-none"
                     name="bDay"
-                    id=""
+                    value={bDay}
+                    onChange={(e) => setUser({ ...user, bDay: e.target.value })}
                   >
-                    <option value="1">202</option>
+                    {days.map((day, index) => (
+                      <option key={index} value={day}>
+                        {day}
+                      </option>
+                    ))}
                   </select>
                   <select
                     className="border-2 w-[30%] border-gray-200 rounded-md px-3 py-2 outline-none"
                     name="bMonth"
-                    id=""
+                    value={bMonth}
+                    onChange={(e) =>
+                      setUser({ ...user, bMonth: e.target.value })
+                    }
                   >
-                    <option value="1">202</option>
+                    {months.map((month, index) => (
+                      <option key={index} value={month}>
+                        {month}
+                      </option>
+                    ))}
                   </select>
 
                   <select
                     className="border-2 border-gray-200  w-[30%] rounded-md px-3 py-2 outline-none"
                     name="bYear"
-                    id=""
+                    value={bYear}
+                    onChange={(e) =>
+                      setUser({ ...user, bYear: e.target.value })
+                    }
                   >
-                    <option value="1">202</option>
+                    {years.map((year, index) => (
+                      <option key={index} value={year}>
+                        {year}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -229,29 +311,41 @@ const Login = () => {
                   Gender
                   <BsFillQuestionCircleFill className="my-auto ml-2" />
                 </h1>
-                <div className=" optionContainer flex flex-row flex-rows-3 justify-between">
-                  <div className="male border-2 border-gray-200  w-[30%] rounded-md px-3 py-2 outline-none">
+                <div className=" optionContainer flex flex-row flex-rows-3 justify-between items-center">
+                  <div className="male flex items-center   border-2 border-gray-200  w-[30%] rounded-md px-3 py-2 outline-none">
                     <label htmlFor="">Male</label>
                     <input
                       className="my-auto ml-4 "
                       type="radio"
                       value={"male"}
+                      name="gender"
+                      onChange={(e) =>
+                        setUser({ ...user, gender: e.target.value })
+                      }
                     />
                   </div>
-                  <div className="male border-2 border-gray-200  w-[30%] rounded-md px-3 py-2 outline-none">
+                  <div className="female  border-2 border-gray-200  w-[30%] rounded-md px-3 py-2 outline-none">
                     <label htmlFor="">Female</label>
                     <input
                       className="my-auto ml-4 "
                       type="radio"
                       value={"female"}
+                      name="gender"
+                      onChange={(e) =>
+                        setUser({ ...user, gender: e.target.value })
+                      }
                     />
                   </div>
-                  <div className="male border-2 font-sans border-gray-200  w-[30%] rounded-md px-3 py-2 outline-none">
+                  <div className="LGBTQ  border-2 font-sans border-gray-200  w-[30%] rounded-md px-3 py-2 outline-none">
                     <label htmlFor="">LGBTQ</label>
                     <input
                       className="my-auto ml-4 "
                       type="radio"
                       value={"lgbtq"}
+                      name="gender"
+                      onChange={(e) =>
+                        setUser({ ...user, gender: e.target.value })
+                      }
                     />
                   </div>
                 </div>
@@ -301,7 +395,10 @@ const Login = () => {
                 </div>
               ) : null}
               <input
-                onChange={formik.handleChange}
+                onChange={(e) => {
+                  formik.handleChange(e);
+                  setLogUser({ ...LogUser, email: e.target.value });
+                }}
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
                 name="email"
@@ -317,7 +414,7 @@ const Login = () => {
                 className="toggle-password absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
                 onClick={togglePasswordVisibility}
               >
-                {formik.touched.password && formik.errors.password ? (
+                {formik.touched.email && formik.errors.email ? (
                   <MdError className="text-red-500 mt-4" />
                 ) : null}
               </span>
@@ -329,7 +426,10 @@ const Login = () => {
                 </div>
               ) : null}
               <input
-                onChange={formik.handleChange}
+                onChange={(e) => {
+                  formik.handleChange(e);
+                  setLogUser({ ...LogUser, password: e.target.value });
+                }}
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
                 name="password"
