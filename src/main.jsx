@@ -7,19 +7,8 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 
 // ------------------ REDUX ------------------
-import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-//npm install redux-devtools-extension --force
-// import { composeWithDevTools } from "redux-devtools-extension";
-import rootReducer from "./reducer/index";
-const store = configureStore(
-  {
-    reducer: rootReducer,
-  }
-  // composeWithDevTools()
-);
-// const store = configureStore(rootReducer, composeWithDevTools());
-
+import store from "./store";
 // --------------------------------------------
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);

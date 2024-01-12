@@ -4,12 +4,45 @@ import { IoMdEyeOff } from "react-icons/io";
 import { MdError } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { BsFillQuestionCircleFill } from "react-icons/bs";
+import DotLoader from "react-spinners/DotLoader";
+
+//toastify
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+//Store
+import { useSelector, useDispatch } from "react-redux";
+// import { login } from "../../reducer/userSlice";
+
+//cookies
+import Cookies from "js-cookie";
 
 //for validation lable
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const Login = () => {
+  //toastify function
+
+  const notify = (message, type) => {
+    toast(message, {
+      type: type,
+      position: "top-center",
+      autoClose: 8000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+
+  const navigate = useNavigate();
+
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
   const togglePasswordVisibility = () => {
@@ -29,22 +62,38 @@ const Login = () => {
       first_name: "",
       last_name: "",
       mobileAndEmail: "",
-      newPassword: "",
     },
     validationSchema: Yup.object({
       email: Yup.string()
         .required("Email is required")
         .email("Invalid email")
-        .max(50),
-      password: Yup.string().required("Password is required").min(6),
+        .max(50, "Email must be max upto 50 characters"),
+      password: Yup.string()
+        .required("Password is required")
+        .min(6, "Password must be at least 6 characters"),
 
-      first_name: Yup.string().required("First name is required").max(25),
-      last_name: Yup.string().required("Surname is required").max(25),
+      first_name: Yup.string()
+        .required("What's your first name?")
+        .max(25, "First name must be max upto 25 characters")
+        .matches(
+          /^[aA-zZ\s]+$/,
+          "Numbers and special characters are not allowed"
+        ),
+      last_name: Yup.string()
+        .required("What is your last name?")
+        .max(25, "Surname must be max upto 25 characters")
+        .matches(
+          /^[aA-zZ\s]+$/,
+          "Numbers and special characters are not allowed"
+        ),
       mobileAndEmail: Yup.string()
         .required("Mobile or email is required")
-        .max(50),
+        .max(50, "Mobile or email must be max upto 50 characters"),
 
-      newPassword: Yup.string().required("Password is required").min(6),
+      // newPassword: Yup.string()
+      //   .required("Password is required")
+      //   .min(6, "Password must be at least 6 characters")
+      //   .max(25, "Password must be max upto 25 characters"),
     }),
     onSubmit: (values) => {
       // Handle form submission here
@@ -60,6 +109,9 @@ const Login = () => {
     setSignup(!signup);
   };
 
+  //store
+  const dispatch = useDispatch();
+
   const userInfos = {
     first_name: "",
     last_name: "",
@@ -70,17 +122,126 @@ const Login = () => {
     bDay: new Date().getDate(),
     gender: "",
   };
+
   const [user, setUser] = useState(userInfos);
   const {
     first_name,
     last_name,
     email,
-    newPassword,
+    password,
     bYear,
     bMonth,
     bDay,
     gender,
   } = user;
+
+  const resetForm = () => {
+    setUser({
+      first_name: "",
+      last_name: "",
+      email: "",
+      password: "",
+      bYear: new Date().getFullYear(),
+      bMonth: new Date().getMonth() + 1,
+      bDay: new Date().getDate(),
+      gender: "",
+    });
+  };
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const registerSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setIsLoading(true);
+      setError("");
+      const response = await fetch(`${backendUrl}/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      const data = await response.json();
+      console.log(data);
+
+      //managing state
+      const { message, ...rest } = data;
+      setTimeout(() => {
+        dispatch({ type: "LOGIN", payload: rest });
+        Cookies.set("user", JSON.stringify(rest));
+      }, 2000);
+
+      {
+        data.message ==
+        "Registration successful! Please check your email for verification"
+          ? notify(data.message, "success")
+          : setError(data.message);
+      }
+
+      resetForm();
+      setIsLoading(false);
+      setTimeout(() => {
+        navigate("/home");
+      }, 2000);
+    } catch (error) {
+      setIsLoading(false);
+      setError(error.message);
+    }
+  };
+
+  //login Submit
+
+  const [isLoadingLogin, setIsLoadingLogin] = useState(false);
+  const [errorLogin, setErrorLogin] = useState("");
+  const [successLogin, setSuccessLogin] = useState("");
+
+  const loginSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setIsLoadingLogin(true);
+      setErrorLogin("");
+
+      const response = await fetch(`${backendUrl}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(LogUser),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      const { message, ...rest } = data;
+
+      setTimeout(() => {
+        dispatch({ type: "LOGIN", payload: rest });
+        Cookies.set("user", JSON.stringify(rest));
+      }, 2000);
+
+      if (data.message === "Login successful!") {
+        notify(data.message, "success");
+      } else {
+        setErrorLogin(data.message);
+      }
+
+      setIsLoadingLogin(false);
+
+      setTimeout(() => {
+        navigate("/home");
+      }, 2000);
+    } catch (error) {
+      setIsLoadingLogin(false);
+      setErrorLogin(error.message);
+    }
+  };
 
   //option for DOB
   const yearTemp = new Date().getFullYear();
@@ -133,7 +294,7 @@ const Login = () => {
                         setUser({ ...user, first_name: e.target.value });
                       }}
                       onBlur={formik.handleBlur}
-                      value={formik.values.first_name}
+                      value={first_name}
                       name="first_name"
                       className={`w-full outline-none border-gray-200 border-2 rounded-md p-3 mb-2 ${
                         formik.touched.first_name && formik.errors.first_name
@@ -163,7 +324,7 @@ const Login = () => {
                       setUser({ ...user, last_name: e.target.value });
                     }}
                     onBlur={formik.handleBlur}
-                    value={formik.values.last_name}
+                    value={last_name}
                     name="last_name"
                     className={`w-full outline-none border-gray-200 border-2 rounded-md p-3 mb-2 ${
                       formik.touched.last_name && formik.errors.last_name
@@ -194,7 +355,7 @@ const Login = () => {
                     setUser({ ...user, email: e.target.value });
                   }}
                   onBlur={formik.handleBlur}
-                  value={formik.values.mobileAndEmail}
+                  value={email}
                   name="mobileAndEmail"
                   className={`w-full outline-none border-gray-200 border-2 rounded-md p-3 mb-2 mt-4${
                     formik.touched.mobileAndEmail &&
@@ -218,22 +379,22 @@ const Login = () => {
 
               {/* ========== NEW Password ============================ */}
 
-              <div className="newPassword relative">
-                {formik.touched.newPassword && formik.errors.newPassword ? (
+              <div className="password relative">
+                {formik.touched.password && formik.errors.password ? (
                   <div className="text-red-500 text-sm mt-2">
-                    {formik.errors.newPassword}
+                    {formik.errors.password}
                   </div>
                 ) : null}
                 <input
                   onChange={(e) => {
-                    formik.handleChange(e);
-                    setUser({ ...user, newPassword: e.target.value });
+                    formik.handleChange(e),
+                      setUser({ ...user, password: e.target.value });
                   }}
                   onBlur={formik.handleBlur}
-                  value={formik.values.newPassword}
-                  name="newPassword"
+                  value={password}
+                  name="password"
                   className={`w-full outline-none border-gray-200 border-2 rounded-md p-3 mb-2 mt-4${
-                    formik.touched.newPassword && formik.errors.newPassword
+                    formik.touched.password && formik.errors.password
                       ? "border-red-500"
                       : ""
                   }`}
@@ -244,7 +405,7 @@ const Login = () => {
                   className="toggle-password absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
                   onClick={() => setNewPasswordVisible(!newPasswordVisible)}
                 >
-                  {formik.touched.newPassword && formik.errors.newPassword ? (
+                  {formik.touched.password && formik.errors.password ? (
                     <MdError className="text-red-500 mt-4" />
                   ) : newPasswordVisible ? (
                     <IoMdEye />
@@ -319,6 +480,7 @@ const Login = () => {
                       type="radio"
                       value={"male"}
                       name="gender"
+                      checked={gender === "male"}
                       onChange={(e) =>
                         setUser({ ...user, gender: e.target.value })
                       }
@@ -331,6 +493,7 @@ const Login = () => {
                       type="radio"
                       value={"female"}
                       name="gender"
+                      checked={gender === "female"}
                       onChange={(e) =>
                         setUser({ ...user, gender: e.target.value })
                       }
@@ -343,6 +506,7 @@ const Login = () => {
                       type="radio"
                       value={"lgbtq"}
                       name="gender"
+                      checked={gender === "lgbtq"}
                       onChange={(e) =>
                         setUser({ ...user, gender: e.target.value })
                       }
@@ -351,14 +515,34 @@ const Login = () => {
                 </div>
               </div>
               <p className="mt-6 font-seg leading-2 text-[0.65rem]">
-                By clicking Sign Up, you agree to our Terms, Privacy Policy and
-                Cookies Policy. You may receive SMS notifications from us and
-                can opt out at any time.
+                By clicking Sign Up, you agree to our{" "}
+                <span className="text-blue-500">Terms</span>,{" "}
+                <span className="text-blue-500">Privacy Policy</span> and
+                <span className="text-blue-500"> Cookies Policy</span>. You may
+                receive SMS notifications from us and can opt out at any time.
               </p>
-              <div className="btn flex items-center justify-center my-4">
+              <div
+                onClick={registerSubmit}
+                className="btn flex items-center justify-center my-4"
+              >
                 <button className="text-white bg-green-500  px-12 rounded-lg py-2">
                   Sign Up
                 </button>
+              </div>
+
+              <div className="mess flex justify-center items-center">
+                {isLoading ? (
+                  <DotLoader color="#3B5998" loading={isLoading} size={30} />
+                ) : (
+                  <>
+                    {error && (
+                      <div className="text-red-500 text-sm">{error}</div>
+                    )}
+                    {success && (
+                      <div className="text-green-500 text-sm">{success}</div>
+                    )}
+                  </>
+                )}
               </div>
             </form>
           </div>
@@ -455,7 +639,7 @@ const Login = () => {
               </span>
             </div>
 
-            <div className="login_btn">
+            <div onClick={loginSubmit} className="login_btn">
               <button className="w-full hover:bg-blue-600 transition-all bg-blue-500 text-white p-3 rounded-md my-2">
                 Log In
               </button>
@@ -467,6 +651,20 @@ const Login = () => {
               >
                 Forgotten password?
               </a>
+            </div>
+            <div className="mess flex justify-center items-center">
+              {isLoading ? (
+                <DotLoader color="#3B5998" loading={isLoading} size={30} />
+              ) : (
+                <>
+                  {errorLogin && (
+                    <div className="text-red-500 text-sm">{errorLogin}</div>
+                  )}
+                  {successLogin && (
+                    <div className="text-green-500 text-sm">{successLogin}</div>
+                  )}
+                </>
+              )}
             </div>
             <div className="divider h-[0.05rem] mt-4 rounded-full bg-gray-200 w-full"></div>
             <div className="createAcc flex item-center justify-center mt-4 text-semibold">
@@ -480,6 +678,7 @@ const Login = () => {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
