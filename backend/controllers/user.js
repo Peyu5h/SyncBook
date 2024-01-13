@@ -60,7 +60,7 @@ exports.register = async (req, res) => {
       first_name,
       last_name,
       email,
-      password: cryptedPassword, // Use the hashed password
+      password: cryptedPassword,
       username: newUsername,
       bYear,
       bMonth,

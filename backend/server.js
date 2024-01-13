@@ -10,7 +10,7 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // Add this line to parse JSON requests
+app.use(express.json());
 
 // Routes
 readdirSync("./routes").forEach((file) => {

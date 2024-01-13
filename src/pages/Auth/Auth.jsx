@@ -12,7 +12,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 //Store
 import { useSelector, useDispatch } from "react-redux";
-// import { login } from "../../reducer/userSlice";
 
 //cookies
 import Cookies from "js-cookie";
@@ -89,14 +88,8 @@ const Login = () => {
       mobileAndEmail: Yup.string()
         .required("Mobile or email is required")
         .max(50, "Mobile or email must be max upto 50 characters"),
-
-      // newPassword: Yup.string()
-      //   .required("Password is required")
-      //   .min(6, "Password must be at least 6 characters")
-      //   .max(25, "Password must be max upto 25 characters"),
     }),
     onSubmit: (values) => {
-      // Handle form submission here
       console.log("Form submitted with values:", values);
     },
   });
@@ -178,15 +171,15 @@ const Login = () => {
       {
         data.message ==
         "Registration successful! Please check your email for verification"
-          ? notify(data.message, "success")
+          ? (notify(data.message, "success"),
+            resetForm(),
+            setTimeout(() => {
+              navigate("/home");
+            }, 2000))
           : setError(data.message);
       }
 
-      resetForm();
       setIsLoading(false);
-      setTimeout(() => {
-        navigate("/home");
-      }, 2000);
     } catch (error) {
       setIsLoading(false);
       setError(error.message);
@@ -304,7 +297,7 @@ const Login = () => {
                         formik.touched.last_name && formik.errors.last_name
                           ? "mt-5"
                           : ""
-                      }`} // Apply mt-5 if last name has an error
+                      }`}
                       type="text"
                       placeholder="First Name"
                     />
