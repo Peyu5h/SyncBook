@@ -7,16 +7,26 @@ import {
   Watch,
   Market,
   Gaming,
+  Menu,
+  Messenger,
+  Notifications,
+  ArrowDown,
 } from "../svg";
 import { useState } from "react";
 
+import { useSelector } from "react-redux";
+
 const Header = () => {
+  const { user } = useSelector((user) => ({ ...user }));
+  console.log(user);
   const color = "#65676b";
-  const [activeNav, setActiveNav] = useState("");
+  const [activeNav, setActiveNav] = useState("home");
   console.log(activeNav);
   return (
     <div>
       <header className="fixed h-14 top-0 px-4 z-99 w-full shadow-md grid grid-cols-3 bg-primary text-primary">
+        {/* =====================================================  LEFT ================================================================ */}
+
         <div className="left flex items-center gap-x-3 px-[5px] py-[0.7rem] ">
           <Link to="/">
             <div className="circle w-8 h-8 rounded-full cursor-pointer flex justify-center items-center ">
@@ -32,6 +42,9 @@ const Header = () => {
             />
           </div>
         </div>
+
+        {/* =====================================================  CENTER ================================================================ */}
+
         <div className="center flex  justify-center items-center gap-x-[12px] transform translate-x-[-3px] ">
           <Link
             onClick={() => setActiveNav("home")}
@@ -94,7 +107,37 @@ const Header = () => {
             <Gaming color={color} />
           </Link>
         </div>
-        <div className="right"></div>
+
+        {/* =====================================================  RIGHT ================================================================ */}
+
+        <div className="right flex absolute right-0 top-1/2 transform -translate-y-1/2">
+          <Link
+            to="/profile"
+            className="flex items-center gap-[5px] cursor-pointer py-[3px] pr-[10px] pl-[6px] font-semibold text-sm mr-[10px]  rounded-full hover:bg-forth transition-all "
+          >
+            <img
+              src={user?.picture}
+              alt=""
+              className="w-[29px] h-[29px] rounded-full  border-[1px] border-[#b0b3b8] transform translate-x-[-1px] "
+            />
+            <span>{user.first_name}</span>
+          </Link>
+          <div className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all ">
+            <Menu />
+          </div>
+          <div className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all">
+            <Messenger />
+          </div>
+          <div className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all">
+            <Notifications />
+            <div className="absolute my-auto text-white text-[13px] bg-red-500 top-[-6px] right-[-5px] rounded-full py-[1px] px-[6px]">
+              5
+            </div>
+          </div>
+          <div className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all">
+            <ArrowDown />
+          </div>
+        </div>
       </header>
     </div>
   );
