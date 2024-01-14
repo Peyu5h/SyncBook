@@ -174,7 +174,7 @@ const Login = () => {
           ? (notify(data.message, "success"),
             resetForm(),
             setTimeout(() => {
-              navigate("/home");
+              navigate("/");
             }, 2000))
           : setError(data.message);
       }
@@ -228,7 +228,7 @@ const Login = () => {
       setIsLoadingLogin(false);
 
       setTimeout(() => {
-        navigate("/home");
+        navigate("/");
       }, 2000);
     } catch (error) {
       setIsLoadingLogin(false);
