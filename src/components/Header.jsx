@@ -13,27 +13,35 @@ import {
   ArrowDown,
 } from "../svg";
 import { useState } from "react";
+import { useAtom } from "jotai";
+import { searchMenuAtom } from "../lib/atom";
 
 import { useSelector } from "react-redux";
+import SearchMenu from "./SearchMenu";
 
 const Header = () => {
   const { user } = useSelector((user) => ({ ...user }));
   console.log(user);
   const color = "#65676b";
   const [activeNav, setActiveNav] = useState("home");
-  console.log(activeNav);
+
+  const [searchMenu, setSeachMenu] = useAtom(searchMenuAtom);
+  console.log(searchMenu);
   return (
-    <div>
-      <header className="fixed h-14 top-0 px-4 z-99 w-full shadow-md grid grid-cols-3 bg-primary text-primary">
+    <header>
+      <div className="fixed h-14 top-0 px-4 z-99 w-full shadow-md grid grid-cols-3 bg-primary text-primary">
         {/* =====================================================  LEFT ================================================================ */}
 
-        <div className="left flex items-center gap-x-3 px-[5px] py-[0.7rem] ">
+        <div className="left  flex items-center gap-x-3 px-[5px] py-[0.7rem] ">
           <Link to="/">
             <div className="circle w-8 h-8 rounded-full cursor-pointer flex justify-center items-center ">
               <Logo />
             </div>
           </Link>
-          <div className="search flex items-center gap-2 p-[10px] pr-8 rounded-full bg-forth ">
+          <div
+            onClick={() => setSeachMenu(true)}
+            className="search flex items-center gap-2 p-[10px] pr-8 rounded-full bg-forth "
+          >
             <Search color={color} />
             <input
               type="text"
@@ -42,6 +50,7 @@ const Header = () => {
             />
           </div>
         </div>
+        {searchMenu && <SearchMenu />}
 
         {/* =====================================================  CENTER ================================================================ */}
 
@@ -120,7 +129,7 @@ const Header = () => {
               alt=""
               className="w-[29px] h-[29px] rounded-full  border-[1px] border-[#b0b3b8] transform translate-x-[-1px] "
             />
-            <span>{user.first_name}</span>
+            <span>{user?.first_name}</span>
           </Link>
           <div className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all ">
             <Menu />
@@ -130,7 +139,7 @@ const Header = () => {
           </div>
           <div className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all">
             <Notifications />
-            <div className="absolute my-auto text-white text-[13px] bg-red-500 top-[-6px] right-[-5px] rounded-full py-[1px] px-[6px]">
+            <div className="absolute  text-white text-[13px] bg-red-500 top-[-6px] right-[-5px] rounded-full py-[1px] px-[6px]">
               5
             </div>
           </div>
@@ -138,8 +147,8 @@ const Header = () => {
             <ArrowDown />
           </div>
         </div>
-      </header>
-    </div>
+      </div>
+    </header>
   );
 };
 
