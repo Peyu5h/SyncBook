@@ -5,35 +5,53 @@ import {
   HomeActive,
   Friends,
   Watch,
-  Market,
-  Gaming,
   Menu,
   Messenger,
   Notifications,
   ArrowDown,
-} from "../svg";
+} from "../../svg";
 import { useRef, useState } from "react";
 import { useAtom } from "jotai";
-import { searchMenuAtom } from "../lib/atom";
+import { searchMenuAtom } from "../../lib/atom";
 
 import { useSelector } from "react-redux";
-import SearchMenu from "./SearchMenu";
+import SearchMenu from "../SearchMenu";
 import UserMenu from "./UserMenu/UserMenu";
-import ClickOutside from "../helpers/ClickOutside";
+import ClickOutside from "../../helpers/ClickOutside";
+import Notification from "./Notification/Notification";
+import MessengerMenu from "./Messenger/MessengerMenu";
+import CreatePostMenu from "./CreatePost/CreatePostMenu";
 
 const Header = () => {
   const { user } = useSelector((user) => ({ ...user }));
-  console.log(user);
   const color = "#65676b";
   const [activeNav, setActiveNav] = useState("home");
 
   const [searchMenu, setSeachMenu] = useAtom(searchMenuAtom);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showNotificationMenu, setShowNotificationMenu] = useState(false);
+  const [showMessengerMenu, setShowMessengerMenu] = useState(false);
+  const [showCreateMenu, setShowCreateMenu] = useState(false);
 
   const userMenu = useRef(null);
+  const notificationMenu = useRef(null);
+  const messengerMenu = useRef(null);
+  const createMenu = useRef(null);
 
   ClickOutside(userMenu, () => {
     setShowUserMenu(false);
+  });
+
+  ClickOutside(notificationMenu, () => {
+    setShowNotificationMenu(false);
+  });
+
+  ClickOutside(messengerMenu, () => {
+    setShowMessengerMenu(false);
+  });
+
+  ClickOutside(createMenu, () => {
+    setShowCreateMenu(false);
   });
 
   return (
@@ -69,9 +87,9 @@ const Header = () => {
             to="/"
             className={`flex relative items-center justify-center w-28 h-10 cursor-pointer transform translate-x-[-2px] ${
               activeNav === "home"
-                ? "border-b-[3px] border-blue-400 hover:bg-transparent"
-                : "border-b-[3px] border-b-transparent hover:bg-forth rounded-md"
-            } px-[2.8rem] py-6`}
+                ? "border-b-[3.5px] border-blue hover:bg-transparent"
+                : "border-b-[3.5px] border-b-transparent hover:bg-forth rounded-md"
+            } px-[2.6rem] py-6`}
           >
             <HomeActive />
           </Link>
@@ -80,9 +98,9 @@ const Header = () => {
             to="/"
             className={`flex relative items-center justify-center w-28 h-10 cursor-pointer transform translate-x-[-2px] ${
               activeNav === "friends"
-                ? "border-b-blue-400 border-b-[3px] hover:bg-transparent"
-                : "border-b-[3px] border-b-transparent hover:bg-forth rounded-md"
-            } px-[2.8rem] py-6`}
+                ? "border-b-blue border-b-[3.5px] hover:bg-transparent"
+                : "border-b-[3.5px] border-b-transparent hover:bg-forth rounded-md"
+            } px-[2.7rem] py-6`}
           >
             <Friends color={color} />
           </Link>
@@ -91,8 +109,8 @@ const Header = () => {
             to="/"
             className={`flex relative items-center justify-center w-28 h-10 cursor-pointer transform translate-x-[-2px] ${
               activeNav === "watch"
-                ? "border-b-blue-400 border-b-[3px] hover:bg-transparent"
-                : "border-b-[3px] border-b-transparent hover:bg-forth rounded-md"
+                ? "border-b-blue border-b-[3.5px] hover:bg-transparent"
+                : "border-b-[3.5px] border-b-transparent hover:bg-forth rounded-md"
             } px-[2.8rem] py-6`}
           >
             <div className="wrapper">
@@ -102,56 +120,44 @@ const Header = () => {
               <Watch color={color} />
             </div>
           </Link>
-          <Link
-            onClick={() => setActiveNav("market")}
-            to="/"
-            className={`flex relative items-center justify-center w-28 h-10 cursor-pointer transform translate-x-[-2px] ${
-              activeNav === "market"
-                ? "border-b-blue-400 border-b-[3px] hover:bg-transparent"
-                : "border-b-[3px] border-b-transparent hover:bg-forth rounded-md"
-            } px-[2.8rem] py-6`}
-          >
-            <Market color={color} />
-          </Link>
-          <Link
-            onClick={() => setActiveNav("gaming")}
-            to="/"
-            className={`flex relative items-center justify-center w-28 h-10 cursor-pointer transform translate-x-[-2px] ${
-              activeNav === "gaming"
-                ? "border-b-blue-400 border-b-[3px] hover:bg-transparent"
-                : "border-b-[3px] border-b-transparent hover:bg-forth rounded-md"
-            } px-[2.8rem] py-6`}
-          >
-            <Gaming color={color} />
-          </Link>
         </div>
 
         {/* =====================================================  RIGHT ================================================================ */}
 
         <div className="right flex absolute right-0 top-1/2 transform -translate-y-1/2">
-          <Link
-            to="/profile"
-            className="flex items-center gap-[5px] cursor-pointer py-[3px] pr-[10px] pl-[6px] font-semibold text-sm mr-[10px]  rounded-full hover:bg-forth transition-all "
-          >
-            <img
-              src={user?.picture}
-              alt=""
-              className="w-[29px] h-[29px] rounded-full  border-[1px] border-[#b0b3b8] transform translate-x-[-1px] "
-            />
-            <span>{user?.first_name}</span>
-          </Link>
-          <div className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all ">
-            <Menu />
-          </div>
-          <div className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all">
-            <Messenger />
-          </div>
-          <div className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all">
-            <Notifications />
-            <div className="absolute  text-white text-[13px] bg-red-500 top-[-6px] right-[-5px] rounded-full py-[1px] px-[6px]">
-              5
+          <div ref={createMenu}>
+            <div
+              onClick={() => setShowCreateMenu(!showCreateMenu)}
+              className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all "
+            >
+              <Menu />
             </div>
+            {showCreateMenu && <CreatePostMenu user={user} />}
           </div>
+
+          <div ref={messengerMenu}>
+            <div
+              onClick={() => setShowMessengerMenu(!showMessengerMenu)}
+              className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all"
+            >
+              <Messenger />
+            </div>
+            {showMessengerMenu && <MessengerMenu user={user} />}
+          </div>
+
+          <div ref={notificationMenu}>
+            <div
+              onClick={() => setShowNotificationMenu(!showNotificationMenu)}
+              className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all"
+            >
+              <Notifications />
+              <div className="absolute  text-white text-[13px] bg-red-500 top-[-6px] right-[-5px] rounded-full py-[1px] px-[6px]">
+                5
+              </div>
+            </div>
+            {showNotificationMenu && <Notification user={user} />}
+          </div>
+
           <div ref={userMenu}>
             <div
               onClick={() => setShowUserMenu(!showUserMenu)}

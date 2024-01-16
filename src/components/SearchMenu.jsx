@@ -50,7 +50,7 @@ const SearchMenu = (setShowSearchMenu) => {
       </div>
       <div className="search_history_header w-full flex items-center justify-between p-[10px] text-sm">
         <span className="text-md font-medium">Recent searches</span>
-        <a className="cursor-pointer text-blue">Edit</a>
+        <a className="cursor-pointer text-blue">Clear all</a>
       </div>
       <div className="search_history w-full "></div>
       <div className="search_result_scrollbar"></div>

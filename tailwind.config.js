@@ -38,6 +38,7 @@ export default {
       },
       borderColor: {
         default: "var(--border-color)",
+        blue: "var(--blue-color)",
       },
       boxShadow: {
         1: "var(--shadow-1)",
