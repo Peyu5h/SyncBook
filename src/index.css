@@ -13,6 +13,7 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
 :root {
   --bg-primary: #fff;
   --bg-secondary: #f0f2f5;
@@ -39,3 +40,13 @@ a {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .small_circle {
+    @apply relative h-[36px] w-[36px] rounded-full flex justify-center items-center mr-[11px] bg-third cursor-pointer;
+  }
+
+  .menu_item {
+    @apply relative flex items-center mt-[5px] p-[7px] font-semibold text-sm rounded-xl hover:bg-[#f0f2f6]  hover:duration-200 transition;
+  }
+}

@@ -12,12 +12,14 @@ import {
   Notifications,
   ArrowDown,
 } from "../svg";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAtom } from "jotai";
 import { searchMenuAtom } from "../lib/atom";
 
 import { useSelector } from "react-redux";
 import SearchMenu from "./SearchMenu";
+import UserMenu from "./UserMenu/UserMenu";
+import ClickOutside from "../helpers/ClickOutside";
 
 const Header = () => {
   const { user } = useSelector((user) => ({ ...user }));
@@ -26,9 +28,16 @@ const Header = () => {
   const [activeNav, setActiveNav] = useState("home");
 
   const [searchMenu, setSeachMenu] = useAtom(searchMenuAtom);
-  console.log(searchMenu);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const userMenu = useRef(null);
+
+  ClickOutside(userMenu, () => {
+    setShowUserMenu(false);
+  });
+
   return (
-    <header>
+    <header className="select-none">
       <div className="fixed h-14 top-0 px-4 z-99 w-full shadow-md grid grid-cols-3 bg-primary text-primary">
         {/* =====================================================  LEFT ================================================================ */}
 
@@ -143,8 +152,14 @@ const Header = () => {
               5
             </div>
           </div>
-          <div className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all">
-            <ArrowDown />
+          <div ref={userMenu}>
+            <div
+              onClick={() => setShowUserMenu(!showUserMenu)}
+              className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all"
+            >
+              <ArrowDown />
+            </div>
+            {showUserMenu && <UserMenu user={user} />}
           </div>
         </div>
       </div>
