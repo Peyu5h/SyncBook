@@ -14,6 +14,14 @@ a {
   color: inherit;
 }
 
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #aeaeafa1;
+  border-radius: 5px;
+}
+
 :root {
   --bg-primary: #fff;
   --bg-secondary: #f0f2f5;

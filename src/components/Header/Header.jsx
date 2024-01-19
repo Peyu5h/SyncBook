@@ -57,8 +57,8 @@ const Header = () => {
   });
 
   return (
-    <header className="select-none">
-      <div className="fixed h-14 top-0 px-4 z-99 w-full shadow-md grid grid-cols-3 bg-primary text-primary">
+    <header style={{ zIndex: 999 }} className="select-none">
+      <div className="fixed h-14 top-0 px-4 z-99 w-full shadow-md grid grid-cols-3 bg-primary text-primary ">
         {/* =====================================================  LEFT ================================================================ */}
 
         <div className="left  flex items-center gap-x-3 px-[5px] py-[0.7rem] ">
@@ -84,14 +84,12 @@ const Header = () => {
         {/* =====================================================  CENTER ================================================================ */}
 
         <div
-          className={`center ${
-            searchMenu ? "hidden" : "flex"
-          } md:flex  justify-center items-center gap-x-[12px] transform translate-x-[-3px] `}
+          className={`center flex  justify-center items-center gap-x-[12px] transform translate-x-[-3px] `}
         >
           <Link
             onClick={() => setActiveNav("home")}
             to="/"
-            className={`md:flex hidden relative items-center justify-center sm:w-28 w-12 h-10 cursor-pointer transform translate-x-[-2px] ${
+            className={`md:flex  hidden relative items-center justify-center sm:w-28 w-12 h-10 cursor-pointer transform translate-x-[-2px] ${
               activeNav === "home"
                 ? "border-b-[3.5px] border-blue hover:bg-transparent"
                 : "border-b-[3.5px] border-b-transparent hover:bg-forth rounded-md"
@@ -146,7 +144,7 @@ const Header = () => {
               onClick={() => setShowCreateMenu(!showCreateMenu)}
               className={`icons ${
                 searchMenu ? "hidden" : "flex"
-              } md:flex hidden relative h-10 w-10 rounded-full  items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all `}
+              } sm:flex hidden relative h-10 w-10 rounded-full  items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all `}
             >
               <Menu />
             </div>
@@ -158,7 +156,7 @@ const Header = () => {
               onClick={() => setShowMessengerMenu(!showMessengerMenu)}
               className={`icons ${
                 searchMenu ? "hidden" : "flex"
-              } md:flex  relative h-10 w-10 rounded-full  items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all `}
+              } xss:flex  relative h-10 w-10 rounded-full  items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all `}
             >
               <Messenger />
             </div>
@@ -170,7 +168,7 @@ const Header = () => {
               onClick={() => setShowNotificationMenu(!showNotificationMenu)}
               className={`icons ${
                 searchMenu ? "hidden" : "flex"
-              } md:flex  relative h-10 w-10 rounded-full  items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all `}
+              } xs:flex  relative h-10 w-10 rounded-full  items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all `}
             >
               <Notifications />
               <div className="absolute  text-white text-[13px] bg-red-500 top-[-6px] right-[-5px] rounded-full py-[1px] px-[6px]">
