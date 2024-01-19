@@ -159,7 +159,6 @@ const Login = () => {
         body: JSON.stringify(user),
       });
       const data = await response.json();
-      console.log(data);
 
       //managing state
       const { message, ...rest } = data;
@@ -370,7 +369,7 @@ const Login = () => {
                 </span>
               </div>
 
-              {/* ========== NEW Password ============================ */}
+              {/* =============================== NEW Password ============================ */}
 
               <div className="password relative">
                 {formik.touched.password && formik.errors.password ? (

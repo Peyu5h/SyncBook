@@ -9,6 +9,8 @@ import {
   Messenger,
   Notifications,
   ArrowDown,
+  Home,
+  FriendsActive,
 } from "../../svg";
 import { useRef, useState } from "react";
 import { useAtom } from "jotai";
@@ -67,13 +69,13 @@ const Header = () => {
           </Link>
           <div
             onClick={() => setSeachMenu(true)}
-            className="search flex items-center gap-2 p-[10px] pr-8 rounded-full bg-forth "
+            className="search flex items-center gap-2 p-[10px] lg:pr-8 rounded-full bg-forth "
           >
             <Search color={color} />
             <input
               type="text"
               placeholder="Search Facebook"
-              className="hide_mobo outline-none border-none bg-transparent text-sm font-seg placeholder:translate-y-[-1px] placeholder-[#65676b]"
+              className=" hidden lg:flex hide_mobo outline-none border-none bg-transparent text-sm font-seg placeholder:translate-y-[-1px] placeholder-[#65676b]"
             />
           </div>
         </div>
@@ -81,35 +83,43 @@ const Header = () => {
 
         {/* =====================================================  CENTER ================================================================ */}
 
-        <div className="center flex  justify-center items-center gap-x-[12px] transform translate-x-[-3px] ">
+        <div
+          className={`center ${
+            searchMenu ? "hidden" : "flex"
+          } md:flex  justify-center items-center gap-x-[12px] transform translate-x-[-3px] `}
+        >
           <Link
             onClick={() => setActiveNav("home")}
             to="/"
-            className={`flex relative items-center justify-center w-28 h-10 cursor-pointer transform translate-x-[-2px] ${
+            className={`md:flex hidden relative items-center justify-center sm:w-28 w-12 h-10 cursor-pointer transform translate-x-[-2px] ${
               activeNav === "home"
                 ? "border-b-[3.5px] border-blue hover:bg-transparent"
                 : "border-b-[3.5px] border-b-transparent hover:bg-forth rounded-md"
-            } px-[2.6rem] py-6`}
+            } px-[2.6rem]  py-6`}
           >
-            <HomeActive />
+            {activeNav === "home" ? <HomeActive /> : <Home color={color} />}
           </Link>
           <Link
             onClick={() => setActiveNav("friends")}
             to="/"
-            className={`flex relative items-center justify-center w-28 h-10 cursor-pointer transform translate-x-[-2px] ${
+            className={`flex mr-28 xs:mr-0 relative items-center justify-center w-28 h-14 sm:h-10 cursor-pointer transform translate-x-[-2px] ${
               activeNav === "friends"
-                ? "border-b-blue border-b-[3.5px] hover:bg-transparent"
+                ? "border-b-blue border-b-[0px] xs:border-b-[3.5px] hover:bg-transparent"
                 : "border-b-[3.5px] border-b-transparent hover:bg-forth rounded-md"
-            } px-[2.7rem] py-6`}
+            } px-[2.6rem] md:px-[1.6rem] xs:px-[1rem] py-6`}
           >
-            <Friends color={color} />
+            {activeNav === "friends" ? (
+              <FriendsActive />
+            ) : (
+              <Friends color={color} />
+            )}
           </Link>
           <Link
             onClick={() => setActiveNav("watch")}
             to="/"
-            className={`flex relative items-center justify-center w-28 h-10 cursor-pointer transform translate-x-[-2px] ${
+            className={`xs:flex hidden relative items-center justify-center w-28 h-10 cursor-pointer transform translate-x-[-2px] ${
               activeNav === "watch"
-                ? "border-b-blue border-b-[3.5px] hover:bg-transparent"
+                ? "border-b-blue border-b-[3.5px]  hover:bg-transparent"
                 : "border-b-[3.5px] border-b-transparent hover:bg-forth rounded-md"
             } px-[2.8rem] py-6`}
           >
@@ -117,18 +127,26 @@ const Header = () => {
               <div className="notifcation absolute px-[5px] py-[1px] bg-red-500 rounded-full top-0 right-[1.9rem] text-white text-xs ">
                 9+
               </div>
-              <Watch color={color} />
+              {activeNav === "watch" ? (
+                <Watch color={color} />
+              ) : (
+                <Watch color={color} />
+              )}
             </div>
           </Link>
         </div>
 
         {/* =====================================================  RIGHT ================================================================ */}
 
-        <div className="right flex absolute right-0 top-1/2 transform -translate-y-1/2">
+        <div
+          className={`right flex  absolute right-0 top-1/2 transform -translate-y-1/2`}
+        >
           <div ref={createMenu}>
             <div
               onClick={() => setShowCreateMenu(!showCreateMenu)}
-              className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all "
+              className={`icons ${
+                searchMenu ? "hidden" : "flex"
+              } md:flex hidden relative h-10 w-10 rounded-full  items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all `}
             >
               <Menu />
             </div>
@@ -138,7 +156,9 @@ const Header = () => {
           <div ref={messengerMenu}>
             <div
               onClick={() => setShowMessengerMenu(!showMessengerMenu)}
-              className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all"
+              className={`icons ${
+                searchMenu ? "hidden" : "flex"
+              } md:flex  relative h-10 w-10 rounded-full  items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all `}
             >
               <Messenger />
             </div>
@@ -148,7 +168,9 @@ const Header = () => {
           <div ref={notificationMenu}>
             <div
               onClick={() => setShowNotificationMenu(!showNotificationMenu)}
-              className="icons relative h-10 w-10 rounded-full flex items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all"
+              className={`icons ${
+                searchMenu ? "hidden" : "flex"
+              } md:flex  relative h-10 w-10 rounded-full  items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all `}
             >
               <Notifications />
               <div className="absolute  text-white text-[13px] bg-red-500 top-[-6px] right-[-5px] rounded-full py-[1px] px-[6px]">

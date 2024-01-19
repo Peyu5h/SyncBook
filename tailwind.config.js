@@ -3,8 +3,8 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     screens: {
-      xs: "418px",
-      xss: "496px",
+      xss: "418px",
+      xs: "512px",
       sm: "618px",
       md: "768px",
       lg: "902px",
@@ -26,6 +26,7 @@ export default {
         darkPrimary: "var(--dark-bg-primary)",
         darkSecondary: "var(--dark-bg-secondary)",
         darkThird: "var(--dark-bg-third)",
+        hover: "#f0f2f6",
       },
       textColor: {
         primary: "var(--color-primary)",

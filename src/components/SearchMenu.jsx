@@ -23,7 +23,7 @@ const SearchMenu = (setShowSearchMenu) => {
   return (
     <div
       ref={menu}
-      className="left absolute top-0 left-0 flex items-start flex-col gap-[6px] bg-primary shadow-lg rounded-b-[10px] transition-all duration-200 z-1 min-h-[400px] max-h-[70vh] pt-[8px] pr-[16px] pb-[10px] pl-[6px]"
+      className="z-999 left absolute top-0 left-0 flex items-start flex-col gap-[6px] bg-primary shadow-lg rounded-b-[10px] transition-all duration-200 z-1 min-h-[400px] max-h-[70vh] pt-[8px] pr-[16px] pb-[10px] pl-[6px]"
     >
       <div className="search_wrap flex items-center gap-[6px]">
         <div
