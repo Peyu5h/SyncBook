@@ -5,13 +5,13 @@ import Stories from "../components/Home/Story/Stories";
 
 const Home = () => {
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen bg-secondary flex">
       <Header />
-      <Left />
-      <div className="middle mt-[75px] ml-[31.8vw]">
+      <Left className="flex-1" />
+      <div className="flex-1 mt-[75px] ml-[31.8vw]">
         <Stories />
       </div>
-      <Right />
+      <Right className="flex-1" />
     </div>
   );
 };

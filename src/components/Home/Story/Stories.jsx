@@ -1,5 +1,5 @@
 import { stories } from "../../../data/home";
-import { Plus } from "../../../svg";
+import { ArrowRight, Plus } from "../../../svg";
 import StoryMap from "./StoryMap";
 
 const Stories = () => {
@@ -24,6 +24,9 @@ const Stories = () => {
       {stories.map((story, index) => (
         <StoryMap key={index} story={story} />
       ))}
+      <div className="arrow w-10 h-10 rounded-full bg-white flex items-center justify-center absolute top-[50%] right-[-5px] transform translate-y-[-50%] col-start-6 col-end-7">
+        <ArrowRight color="#65676b" />
+      </div>
     </div>
   );
 };

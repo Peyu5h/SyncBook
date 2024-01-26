@@ -7,14 +7,16 @@ const StoryMap = ({ story }) => {
           src={story.image}
           alt="profile_story"
         />
-        <div className="story_profile ">
+        <div className="story_profile absolute h-10 w-10 left-0 top-0  rounded-full overflow-hidden border-[3px]  ">
           <img
-            className="w-full h-full object-cover"
+            className="h-10 w-10 object-cover rounded-full"
             src={story.profile_picture}
             alt="profile_pic"
           />
         </div>
-        <div className="story_name">{story.profile_name}</div>
+        <div className="story_name absolute left-[50%] transform translate-x-[-50%] bottom-[10px] break-words text-white text-sm pl-[10px] w-[100px]">
+          {story.profile_name}
+        </div>
       </div>
     </div>
   );
