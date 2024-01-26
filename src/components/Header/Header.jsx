@@ -79,12 +79,12 @@ const Header = () => {
             />
           </div>
         </div>
-        {searchMenu && <SearchMenu />}
+        {searchMenu && <SearchMenu className="z-999" />}
 
         {/* =====================================================  CENTER ================================================================ */}
 
         <div
-          className={`center flex  justify-center items-center gap-x-[12px] transform translate-x-[-3px] `}
+          className={`center hidden xs:flex justify-center items-center gap-x-[12px] transform translate-x-[-3px] `}
         >
           <Link
             onClick={() => setActiveNav("home")}
@@ -100,7 +100,7 @@ const Header = () => {
           <Link
             onClick={() => setActiveNav("friends")}
             to="/"
-            className={`flex mr-28 xs:mr-0 relative items-center justify-center w-28 h-14 sm:h-10 cursor-pointer transform translate-x-[-2px] ${
+            className={`flex mr-[5rem] xs:mr-0 relative items-center justify-center w-28 h-14 sm:h-10 cursor-pointer transform translate-x-[-2px] ${
               activeNav === "friends"
                 ? "border-b-blue border-b-[0px] xs:border-b-[3.5px] hover:bg-transparent"
                 : "border-b-[3.5px] border-b-transparent hover:bg-forth rounded-md"
