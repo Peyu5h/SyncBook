@@ -1,4 +1,6 @@
-import { Plus } from "../../svg";
+import { stories } from "../../../data/home";
+import { Plus } from "../../../svg";
+import StoryMap from "./StoryMap";
 
 const Stories = () => {
   return (
@@ -19,6 +21,9 @@ const Stories = () => {
           ADD STORY
         </div>
       </div>
+      {stories.map((story, index) => (
+        <StoryMap key={index} story={story} />
+      ))}
     </div>
   );
 };
