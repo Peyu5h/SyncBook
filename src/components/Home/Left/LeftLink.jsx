@@ -2,7 +2,7 @@ export default function LeftLink({ img, text, notification }) {
   return (
     <div
       style={{ zIndex: 1 }}
-      className="left_link z-1 flex items-center px-[5px] py-[10px] rounded-lg cursor-pointer font-medium mb-[2px] hover:bg-[#f0f2f6]  hover:duration-200 transition "
+      className="left_link z-1 flex items-center px-[5px] py-[10px] rounded-lg cursor-pointer font-medium mb-[2px] hover:bg-third  hover:duration-200 transition "
     >
       <img
         className="w-[36px] h-[36px] rounded-full mr-[11px]"

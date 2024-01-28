@@ -5,7 +5,7 @@ import StoryMap from "./StoryMap";
 const Stories = () => {
   return (
     <div
-      className="stories relative grid  gap-[10px] py-[6px] "
+      className="stories relative grid gap-[10px] py-[6px] z-0 "
       style={{ gridTemplateColumns: "repeat(6, 105px)" }}
     >
       <div className="createStories relative h-[190px] w-full rounded-[10px] overflow-hidden cursor-pointer shadow-md">

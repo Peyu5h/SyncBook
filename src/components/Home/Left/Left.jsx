@@ -1,16 +1,14 @@
 import { useSelector } from "react-redux";
 import LeftLink from "./LeftLink";
 import ShortCut from "./ShortCut";
+import { Link } from "react-router-dom";
 
 const Left = () => {
   const { user } = useSelector((user) => ({ ...user }));
 
   return (
-    <div
-      style={{ zIndex: 1 }}
-      className="fixed z-1 mt-[72px] max-h-screen w-[300px] overflow-y-auto text-primary px-[15px] text-sm scrollbar"
-    >
-      <div className="left_link flex items-center px-[5px] py-[10px] rounded-lg cursor-pointer font-medium mb-[2px] hover:bg-[#f0f2f6]  hover:duration-200 transition ">
+    <div className="fixed z-10 mt-[72px] max-h-screen w-[300px] overflow-y-auto text-primary px-[15px] text-sm scrollbar">
+      <div className="left_link z-12 flex items-center px-[5px] py-[10px] rounded-lg cursor-pointer font-medium mb-[2px] hover:bg-third  hover:duration-200 transition ">
         <img
           className="w-[36px] h-[36px] rounded-full mr-[11px]"
           src={user?.picture}
@@ -21,10 +19,19 @@ const Left = () => {
         </span>
       </div>
       <div className="All_Link">
-        <LeftLink img={"friends"} text={"Find friends"} />
+        <Link to="/profile">
+          <LeftLink img={"friends"} text={"Find friends"} />
+        </Link>
         <LeftLink img={"memories"} text={"Memories"} />
         <LeftLink img={"groups"} text={"Groups"} notification={"5 new"} />
-        <LeftLink img={"watch"} text={"Watch"} notification={"9 new videos"} />
+        <Link to="/profile">
+          {" "}
+          <LeftLink
+            img={"watch"}
+            text={"Watch"}
+            notification={"9 new videos"}
+          />
+        </Link>
         <LeftLink img={"messenger"} text={"Messenger"} />
         <LeftLink img={"saved"} text={"Saved"} />
       </div>

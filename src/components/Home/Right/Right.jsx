@@ -15,12 +15,12 @@ const Right = () => {
         <div className="header relative flex items-center justify-between pt-[12px] pb-[7px] pl-[10px] font-medium text-secondary">
           <div className="left">Contacts</div>
           <div className="right flex items-center">
-            <div className=" contact_circle w-[36px] h-[36px] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#f0f2f6] transition-all duration-300">
+            <div className=" contact_circle w-[36px] h-[36px] rounded-full flex items-center justify-center cursor-pointer hover:bg-third transition-all duration-300">
               <Search color={color} />
             </div>
           </div>
         </div>
-        <div className="contact_list p-[5px]">
+        <div className="contact_list p-[5px] ">
           <Contacts user={user} />
         </div>
       </div>
