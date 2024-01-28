@@ -57,7 +57,7 @@ const Header = () => {
   });
 
   return (
-    <header style={{ zIndex: 999 }} className="select-none">
+    <header style={{ zIndex: 100 }} className="select-none">
       <div className="fixed h-14 top-0 px-4 z-99 w-full shadow-md grid grid-cols-3 bg-primary text-primary ">
         {/* =====================================================  LEFT ================================================================ */}
 

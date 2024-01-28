@@ -26,6 +26,7 @@ export default {
         darkPrimary: "var(--dark-bg-primary)",
         darkSecondary: "var(--dark-bg-secondary)",
         darkThird: "var(--dark-bg-third)",
+        lightThird: "#f0f2f6",
         hover: "#f0f2f6",
       },
       textColor: {
@@ -33,7 +34,9 @@ export default {
         secondary: "var(--color-secondary)",
         darkPrimary: "var(--dark-color-primary)",
         darkSecondary: "var(--dark-color-secondary)",
-        blue: "var(--blue-color)",
+        darkThird: "var(--dark-bg-third)",
+        lightThird: "#f0f2f6",
+        third: "var(--bg-third)",
         green: "var(--green-color)",
         lightBlue: "var(--light-blue-color)",
       },

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Feeling, LiveVideo, Photo } from "../../svg";
 
-const CreatePost = ({ user }) => {
+const CreatePost = ({ user, createPost, setCreatePost }) => {
   return (
     <div>
       <div className="create_post bg-primary rounded-[10px] shadow-md mt-[1.1rem] cursor-pointer pb-2">
@@ -11,11 +11,14 @@ const CreatePost = ({ user }) => {
             src={user.picture}
             alt="profile_pic"
           />
-          <div className="openPost cursor-pointer h-10 flex-1 rounded-full text-md bg-forth text-secondary flex items-center pl-[10px]">
+          <div
+            onClick={() => setCreatePost(!createPost)}
+            className="openPost cursor-pointer h-10 flex-1 rounded-full text-md bg-forth hover:bg-third text-secondary flex items-center pl-[10px]"
+          >
             What&apos;s on your mind, {user?.first_name}?
           </div>
         </div>
-        <div className="splitter h-[1px] w-[95%] bg-third my-[7px] mx-[10px]"></div>
+        <div className="splitter h-[1px] w-[95%] bg-third my-[7px] mx-[10px] cursor-default"></div>
         <div className="createPost_body px-[10px] grid grid-cols-3">
           <div className="create_icon flex gap-x-2 hover:bg-[#f0f2f6] py-2  items-center justify-center rounded-lg">
             <LiveVideo color="#f3425f" />
@@ -27,7 +30,7 @@ const CreatePost = ({ user }) => {
           </div>
           <div className="create_icon flex gap-x-2 hover:bg-[#f0f2f6]  py-2 items-center justify-center rounded-lg">
             <Feeling color="#f7b928" />
-            Feeling/Activity
+            Feeling
           </div>
         </div>
       </div>
