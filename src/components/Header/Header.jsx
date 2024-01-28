@@ -144,7 +144,7 @@ const Header = () => {
               onClick={() => setShowCreateMenu(!showCreateMenu)}
               className={`icons ${
                 searchMenu ? "hidden" : "flex"
-              } sm:flex hidden relative h-10 w-10 rounded-full  items-center justify-center mr-2 bg-third cursor-pointer hover:bg-[#dadce0] transition-all `}
+              } sm:flex hidden relative h-10 w-10 rounded-full  items-center justify-center mr-2 bg-third cursor-pointer cursor-pointer hover:bg-[#dadce0] transition-all `}
             >
               <Menu />
             </div>

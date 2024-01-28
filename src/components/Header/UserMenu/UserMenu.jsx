@@ -29,7 +29,7 @@ const UserMenu = ({ user }) => {
               </div>
             </Link>
             <div className="menu_splitter w-full h-[1px] bg-third mt-[5px]"></div>
-            <div className="menu_main p-[10px] mt-[5px] flex items-center gap-[5px] hover:bg-[#f0f2f6]   hover:duration-200 transition rounded-xl">
+            <div className="menu_main p-[10px] mt-[5px] flex items-center gap-[5px] cursor-pointer hover:bg-[#f0f2f6]   hover:duration-200 transition rounded-xl">
               <div className="small_circle">
                 <i className="report_filled_icon"></i>
               </div>
@@ -41,17 +41,23 @@ const UserMenu = ({ user }) => {
               </div>
             </div>
             <div className="menu_splitter w-full h-[1px] bg-third mt-[5px]"></div>
-            <div onClick={() => setVisible(1)} className="menu_item  ">
+            <div
+              onClick={() => setVisible(1)}
+              className="menu_item cursor-pointer "
+            >
               <div className="small_circle ">
                 <i className="settings_filled_icon"></i>
               </div>
               <span>Settings & privacy</span>
-              <div className="right_arrow absolute top-1/2 right-[10px] transform translate-y-[-50%]">
+              <div className="right_arrow absolute top-1/2 right-[10px] transform translate-y-[-50%] ">
                 <i className="right_icon"></i>
               </div>
             </div>
 
-            <div onClick={() => setVisible(2)} className="menu_item  ">
+            <div
+              onClick={() => setVisible(2)}
+              className="menu_item cursor-pointer  "
+            >
               <div className="small_circle ">
                 <i className="help_filled_icon"></i>
               </div>
@@ -61,7 +67,10 @@ const UserMenu = ({ user }) => {
               </div>
             </div>
 
-            <div onClick={() => setVisible(3)} className="menu_item">
+            <div
+              onClick={() => setVisible(3)}
+              className="menu_item cursor-pointer"
+            >
               <div className="small_circle ">
                 <i className="dark_filled_icon"></i>
               </div>
@@ -71,7 +80,7 @@ const UserMenu = ({ user }) => {
               </div>
             </div>
 
-            <div className="menu_item ">
+            <div className="menu_item cursor-pointer">
               <div className="small_circle ">
                 <i className="logout_filled_icon"></i>
               </div>

@@ -4,7 +4,7 @@ const DisplayAccessibility = ({ setVisible }) => {
       <div className="absolte_wrap_header flex items-center gap-[10px] font-bold text-2xl">
         <div
           onClick={() => setVisible(0)}
-          className="circle rounded-full hover:bg-[#f0f2f6] hover:duration-200 w-[28px] h-[28px] flex items-center justify-center p-1 "
+          className="circle rounded-full  cursor-pointer hover:bg-[#f0f2f6] hover:duration-200 w-[28px] h-[28px] flex items-center justify-center p-1 "
         >
           <i className="arrow_back_icon"></i>
         </div>
@@ -85,7 +85,7 @@ const DisplayAccessibility = ({ setVisible }) => {
         />
       </label>
 
-      <div className="menu_item">
+      <div className="menu_item cursor-pointer">
         <div className="small_circle">
           <i className="keyboard_icon"></i>
         </div>

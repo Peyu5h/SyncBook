@@ -4,27 +4,27 @@ const HelpSupport = ({ setVisible }) => {
       <div className="absolte_wrap_header flex items-center gap-[10px] font-bold text-2xl">
         <div
           onClick={() => setVisible(0)}
-          className="circle rounded-full hover:bg-[#f0f2f6] hover:duration-200 w-[28px] h-[28px] flex items-center justify-center p-1 "
+          className="circle rounded-full cursor-pointer hover:bg-[#f0f2f6] hover:duration-200 w-[28px] h-[28px] flex items-center justify-center p-1 "
         >
           <i className="arrow_back_icon"></i>
         </div>
         Help & support
       </div>
-      <div className="menu_item   ">
+      <div className="menu_item  cursor-pointer ">
         <div className="small_circle">
           <i className="help_center_icon"></i>
         </div>
         <span>Help Center</span>
       </div>
 
-      <div className="menu_item   ">
+      <div className="menu_item cursor-pointer  ">
         <div className="small_circle">
           <i className="email_icon"></i>
         </div>
         <span>Support Inbox</span>
       </div>
 
-      <div className="menu_item   ">
+      <div className="menu_item cursor-pointer  ">
         <div className="small_circle">
           <i className="info_filled_icon"></i>
         </div>
