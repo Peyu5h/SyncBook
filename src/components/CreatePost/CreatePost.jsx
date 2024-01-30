@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Feeling, LiveVideo, Photo } from "../../svg";
+import { useAtom } from "jotai";
+import { menuAtom } from "../../reducer/atom";
 
-const CreatePost = ({ user, createPost, setCreatePost }) => {
+const CreatePost = ({ user }) => {
+  const [open, setOpen] = useAtom(menuAtom);
+
   return (
     <div>
       <div className="create_post bg-primary rounded-[10px] shadow-md mt-[1.1rem] cursor-pointer pb-2">
@@ -12,7 +16,7 @@ const CreatePost = ({ user, createPost, setCreatePost }) => {
             alt="profile_pic"
           />
           <div
-            onClick={() => setCreatePost(!createPost)}
+            onClick={() => setOpen(!open)}
             className="openPost cursor-pointer h-10 flex-1 rounded-full text-md bg-forth hover:bg-third text-secondary flex items-center pl-[10px]"
           >
             What&apos;s on your mind, {user?.first_name}?
