@@ -7,6 +7,7 @@ import Stories from "../components/Home/Story/Stories";
 import CreatePostPopup from "../components/CreatePost/CreatePostPopup";
 import { useAtom } from "jotai";
 import { menuAtom } from "../reducer/atom";
+import UserPost from "../components/UserPost/UserPost";
 
 const Home = () => {
   const user = useSelector((state) => state.user);
@@ -27,6 +28,7 @@ const Home = () => {
           <div>
             <Stories />
             <CreatePost user={user} />
+            <UserPost user={user} />
           </div>
         </div>
         <Right className=" z-10" />

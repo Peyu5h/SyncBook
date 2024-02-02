@@ -8,7 +8,7 @@ const CreatePost = ({ user }) => {
 
   return (
     <div>
-      <div className="create_post bg-primary rounded-[10px] shadow-md mt-[1.1rem] cursor-pointer pb-2">
+      <div className="create_post bg-primary rounded-[10px] shadow-md mt-[1.1rem] cursor-pointer pb-2 w-[40.5vw]">
         <div className="header flex gap-[8px] items-center pt-[10px] pr-[17px] pb-[5px] pl-[15px] ">
           <img
             className="h-12 w-12 rounded-full"
